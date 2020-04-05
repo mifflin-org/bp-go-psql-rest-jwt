@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"../handlers/todo"
 	"github.com/gorilla/mux"
+	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/handlers/todo"
 )
 
 func LoadToDoRoutes(r *mux.Router) {

@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"../../utils"
+	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/utils"
 	"net/http"
 )
 

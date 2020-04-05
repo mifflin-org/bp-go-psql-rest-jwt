@@ -2,12 +2,12 @@ package main
 
 import (
 	"context"
-	"./routes"
+	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/config"
+	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/routes"
 	"log"
 	"net/http"
 
 	"github.com/rs/cors"
-	"./config"
 )
 
 

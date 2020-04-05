@@ -1,8 +1,8 @@
 package postgres
 
 import (
-	"../../../config"
-	"../../../models"
+	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/config"
+	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/models"
 	"context"
 	"log"
 )

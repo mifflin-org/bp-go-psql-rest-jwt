@@ -2,7 +2,7 @@ package postgres
 
 import (
 	"context"
-	"../../../config"
+	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/config"
 	"log"
 )
 

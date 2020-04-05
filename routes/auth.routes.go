@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"../handlers/user"
 	"github.com/gorilla/mux"
+	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/handlers/user"
 )
 
 func LoadAuthRoutes(r *mux.Router) {

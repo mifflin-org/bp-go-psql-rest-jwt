@@ -1,8 +1,8 @@
 package routes
 
 import (
-	other "../handlers/other"
 	"github.com/gorilla/mux"
+	other "github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/handlers/other"
 )
 
 func NewRouter() *mux.Router {
