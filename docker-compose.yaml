@@ -1,0 +1,82 @@
+# Sets the version for the docker-compose
+version: '3'
+
+# Sample local.env file before running this docker-compose file
+#  export PG_HOST=my-database
+#  export PG_PORT=5432
+#  export PG_USER=postgres
+#  export PG_PASSWORD=password
+#  export PG_DB=postgres
+
+# Define the containers required by services
+services:
+  # my-server is the Go API Code run by server.go
+  my-server:
+    # Builds the directory . (current)
+    # It finds the Dockerfile and builds the image
+    build: .
+    # If app crashes, it will restart the container again
+    restart: on-failure
+    # Reads the environment from the terminal and feeds it to the container
+    # Run the .env file in the terminal from which docker-compose is run
+    environment:
+      - DB_HOST=${PG_HOST}
+      - DB_PORT=${PG_PORT}
+      - DB_USER=${PG_USER}
+      - DB_PASSWORD=${PG_PASSWORD}
+      - DB_NAME=${PG_DB}
+    # Volume defines the persistent storage on the host machine in which
+    # the container is run
+    volumes:
+      - api:/usr/src/app/
+    # Exposes the port 5000 to be accessed by port 5000 of localhost (0.0.0.0)
+    # It is of the format of HOST PORT:CONTAINER PORT
+    ports:
+      - '5000:5000'
+    # Defines the order in which the containers are to be started
+    # Since this depends on my-database, my-database container will start before this one
+    depends_on:
+      - my-database
+    # The containers running together are connected by one single network
+    # We connect this app to the 'network'
+    networks:
+      - my-network
+
+  # my-database pulls your database image and runs it
+  # The default password is: docker
+  my-database:
+    # Pulls in the latest postgres installed OS
+    image: postgres:latest
+    # Sets the environment variables
+    # Sets the username: postgres and password: password
+    environment:
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
+      - POSTGRES_DB=${PG_DB}
+      - DATABASE_HOST=${PG_HOST}
+    ports:
+      - '5432:5432'
+    # Defines the persistance storage
+    # Necessary as if the container is switched off
+    # Data isn't lost
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - my-network
+    # Healthcheck heartbeat ensures in every 5 seconds that the database is up
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+# Defines the volumes to be used during the entire run of these containers
+volumes:
+  api:
+
+# Defines the network on which these containers are to be connected
+networks:
+  my-network:
+    driver: bridge
+
+
