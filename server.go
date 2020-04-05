@@ -2,12 +2,12 @@ package main
 
 import (
 	"context"
-	"github.com/zerefwayne/go-postgres-rest-docker-boilerplate/routes"
+	"./routes"
 	"log"
 	"net/http"
 
 	"github.com/rs/cors"
-	"github.com/zerefwayne/go-postgres-rest-docker-boilerplate/config"
+	"./config"
 )
 
 

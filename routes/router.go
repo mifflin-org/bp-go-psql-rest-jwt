@@ -11,6 +11,7 @@ func NewRouter() *mux.Router {
 
 	r.HandleFunc("/", other.DefaultHandler).Methods("GET")
 
+	LoadAuthRoutes(r)
 	LoadToDoRoutes(r)
 
 	return r
