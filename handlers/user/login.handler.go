@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"errors"
 	helper "github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/helpers/postgres/user"
 	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/utils"
 	"net/http"
@@ -21,19 +20,27 @@ func SignInHandler(w http.ResponseWriter, r *http.Request) {
 
 	_ = json.NewDecoder(r.Body).Decode(requestBody)
 
-	if user, err := helper.FetchUserByEmail(requestBody.Email); err != nil {
+
+	if user, exists, err := helper.FetchUserByEmail(requestBody.Email); err != nil {
 		body := make(map[string]interface{})
 		body["error"] = err
 		utils.Respond(w, http.StatusInternalServerError, false, body)
 	} else {
-		if user.Password == requestBody.Password {
-			body := make(map[string]interface{})
-			body["userData"] = user
-			utils.Respond(w, http.StatusOK, true, body)
+
+		if exists {
+			if user.Password == requestBody.Password {
+				body := make(map[string]interface{})
+				body["userData"] = user
+				utils.Respond(w, http.StatusOK, true, body)
+			} else {
+				body := make(map[string]interface{})
+				body["error"] = "authentication error: wrong password"
+				utils.Respond(w, http.StatusBadRequest, false, body)
+			}
 		} else {
 			body := make(map[string]interface{})
-			body["error"] = errors.New("authentication error: wrong password")
-			utils.Respond(w, http.StatusForbidden, false, body)
+			body["error"] = "authentication error: email doesn't exist"
+			utils.Respond(w, http.StatusBadRequest, false, body)
 		}
 	}
 

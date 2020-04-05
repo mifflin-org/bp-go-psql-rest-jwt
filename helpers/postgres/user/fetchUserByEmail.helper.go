@@ -9,7 +9,7 @@ import (
 )
 
 // FetchUserByEmail Fetches user by email
-func FetchUserByEmail(email string) (models.User, error) {
+func FetchUserByEmail(email string) (models.User, bool, error) {
 
 	log.Printf("helper	|	fetching user by email\n")
 
@@ -18,7 +18,7 @@ func FetchUserByEmail(email string) (models.User, error) {
 	var user models.User
 
 	if rows, err := config.DB.Query(context.Background(), query, email); err != nil {
-		return user, err
+		return user, false, err
 	} else {
 
 		// Don't forget to close the rows after calling Query()
@@ -29,13 +29,13 @@ func FetchUserByEmail(email string) (models.User, error) {
 			// Row is obtained in the order which they were created in database
 			if err := rows.Scan(&user.ID, &user.Name, &user.Email, &user.Password, &user.CreatedAt); err != nil {
 				log.Println(err)
-				return user, err
+				return user, false, err
 			}
 
-			return user, nil
+			return user, true, nil
 		}
 
-		return user, errors.New("no records found")
+		return user, false, errors.New("no records found")
 	}
 
 }

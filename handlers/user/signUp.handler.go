@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"errors"
 	helper "github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/helpers/postgres/user"
 	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/models"
 	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/utils"
@@ -32,7 +31,7 @@ func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 
 		if exists {
 			body := make(map[string]interface{})
-			body["error"] = errors.New("email already exists")
+			body["error"] = "email already exists"
 			utils.Respond(w, http.StatusBadRequest, false, body)
 			return
 		}
