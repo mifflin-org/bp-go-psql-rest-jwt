@@ -1,4 +1,4 @@
-module github.com/zerefwayne/go-postgres-rest-docker-boilerplate
+module github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate
 
 go 1.14
 
