@@ -28,7 +28,7 @@ func SignInHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 
 		if exists {
-			if user.Password == requestBody.Password {
+			if utils.CheckPassword(requestBody.Password, user.Password) {
 
 				if tokenString, tokenError := utils.GenerateJWTString(user); tokenError != nil {
 					body := make(map[string]interface{})
@@ -39,6 +39,7 @@ func SignInHandler(w http.ResponseWriter, r *http.Request) {
 					body["token"] = tokenString
 					utils.Respond(w, http.StatusOK, true, body)
 				}
+
 			} else {
 				body := make(map[string]interface{})
 				body["error"] = "authentication error: wrong password"

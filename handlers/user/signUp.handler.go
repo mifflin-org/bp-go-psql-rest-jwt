@@ -41,7 +41,15 @@ func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 
 		newUser.Email = requestBody.Email
 		newUser.Name = requestBody.Name
-		newUser.Password = requestBody.Password
+
+		if hash, err := utils.HashPassword(requestBody.Password); err != nil {
+			body := make(map[string]interface{})
+			body["error"] = "error while hashing password"
+			utils.Respond(w, http.StatusBadRequest, false, body)
+		} else {
+			newUser.Password = hash
+		}
+
 		newUser.CreatedAt = time.Now()
 		newUser.ID = uuid.New().String()
 

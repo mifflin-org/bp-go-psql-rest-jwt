@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/utils"
-	"log"
 	"net/http"
 	"strings"
 )
@@ -31,9 +30,6 @@ func JWTMiddleware(next http.Handler) http.Handler {
 			utils.Respond(w, http.StatusUnauthorized, false, body)
 
 		} else {
-
-			log.Printf("%v\n", claims.(jwt.MapClaims))
-			log.Printf("%s\n", claims.(jwt.MapClaims)["id"])
 
 			claimsMap := claims.(jwt.MapClaims)
 
