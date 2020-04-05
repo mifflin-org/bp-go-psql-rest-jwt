@@ -3,6 +3,8 @@ module github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate
 go 1.14
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/google/uuid v1.1.1
 	github.com/gorilla/mux v1.7.4
 	github.com/jackc/pgx/v4 v4.6.0
 	github.com/joho/godotenv v1.3.0

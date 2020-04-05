@@ -23,20 +23,28 @@ func SignInHandler(w http.ResponseWriter, r *http.Request) {
 
 	if user, exists, err := helper.FetchUserByEmail(requestBody.Email); err != nil {
 		body := make(map[string]interface{})
-		body["error"] = err
+		body["error"] = err.Error()
 		utils.Respond(w, http.StatusInternalServerError, false, body)
 	} else {
 
 		if exists {
 			if user.Password == requestBody.Password {
-				body := make(map[string]interface{})
-				body["userData"] = user
-				utils.Respond(w, http.StatusOK, true, body)
+
+				if tokenString, tokenError := utils.GenerateJWTString(user); tokenError != nil {
+					body := make(map[string]interface{})
+					body["error"] = tokenError.Error()
+					utils.Respond(w, http.StatusUnauthorized, false, body)
+				} else {
+					body := make(map[string]interface{})
+					body["token"] = tokenString
+					utils.Respond(w, http.StatusOK, true, body)
+				}
 			} else {
 				body := make(map[string]interface{})
 				body["error"] = "authentication error: wrong password"
-				utils.Respond(w, http.StatusBadRequest, false, body)
+				utils.Respond(w, http.StatusUnauthorized, false, body)
 			}
+
 		} else {
 			body := make(map[string]interface{})
 			body["error"] = "authentication error: email doesn't exist"

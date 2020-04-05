@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"github.com/google/uuid"
 	helper "github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/helpers/postgres/user"
 	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/models"
 	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/utils"
@@ -42,7 +43,8 @@ func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		newUser.Name = requestBody.Name
 		newUser.Password = requestBody.Password
 		newUser.CreatedAt = time.Now()
-		newUser.ID = string(time.Now().UnixNano())
+		newUser.ID = uuid.New().String()
+
 
 		if insertError := helper.InsertUser(newUser); insertError != nil {
 			body := make(map[string]interface{})
