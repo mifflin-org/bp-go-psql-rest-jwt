@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	helper "github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/helpers/postgres/user"
-	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/utils"
 	"encoding/json"
 	"errors"
+	helper "github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/helpers/postgres/user"
+	"github.com/zerefwayne/go-psql-rest-jwt-docker-boilerplate/utils"
 	"net/http"
 )
 
