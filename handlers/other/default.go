@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"github.com/zerefwayne/go-postgres-rest-docker-boilerplate/utils"
+	"../../utils"
 	"net/http"
 )
 

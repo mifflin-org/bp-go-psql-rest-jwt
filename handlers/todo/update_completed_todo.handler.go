@@ -1,9 +1,9 @@
 package todo
 
 import (
+	helper "../../helpers/postgres/todo"
+	"../../utils"
 	"github.com/gorilla/mux"
-	helper "github.com/zerefwayne/go-postgres-rest-docker-boilerplate/helpers/postgres/todo"
-	"github.com/zerefwayne/go-postgres-rest-docker-boilerplate/utils"
 	"net/http"
 	"strconv"
 )

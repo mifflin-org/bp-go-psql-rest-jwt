@@ -5,6 +5,11 @@ import (
 	"net/http"
 )
 
+type response struct {
+	Success	bool	`json:"success"`
+	Payload interface{}	`json:"payload"`
+}
+
 func Respond(w http.ResponseWriter, code int, success bool, body map[string]interface{}) {
 
 	w.Header().Set("Content-Type", "application/json")

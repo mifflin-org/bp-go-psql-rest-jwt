@@ -1,14 +1,17 @@
 package todo
 
 import (
+	helper "../../helpers/postgres/todo"
+	"../../models"
+	"../../utils"
 	"encoding/json"
-	"github.com/zerefwayne/go-postgres-rest-docker-boilerplate/utils"
 	"net/http"
 	"time"
-
-	helper "github.com/zerefwayne/go-postgres-rest-docker-boilerplate/helpers/postgres/todo"
-	"github.com/zerefwayne/go-postgres-rest-docker-boilerplate/models"
 )
+
+type insertRequest struct {
+	Content string `json:"content"`
+}
 
 // InsertToDoHandler POST	/todo	inserts a new ToDo
 func InsertToDoHandler(w http.ResponseWriter, r *http.Request) {
